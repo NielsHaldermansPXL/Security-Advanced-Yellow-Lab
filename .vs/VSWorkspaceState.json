@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\api",
+    "\\api\\Controllers",
+    "\\console",
+    "\\console\\bin\\Debug",
+    "\\console\\bin\\Debug\\net5.0",
+    "\\console\\bin\\Release",
+    "\\console\\bin\\Release\\net5.0",
+    "\\console\\bin\\Release\\net5.0\\ref",
+    "\\console\\obj\\Debug",
+    "\\console\\obj\\Debug\\net5.0"
+  ],
+  "SelectedNode": "\\console\\console.csproj",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8QTkvwfaf283rSAdrET3EKGUhj/bIcyKnrq154K/18sg/cgVSpMATANFcqRozCAkuhdTAXrhg+tTUL4yeWcsQQ==",
+  "dgSpecHash": "/8XNA0zWjrr/Y1+sFabHBh8JAgYsIYEYf4MJAdcrRln+TOAbsIA2xqP7wSuzm7VR65gD35GaMUuIVa4I+UK6bg==",
   "success": true,
   "projectFilePath": "C:\\Users\\11900197\\Desktop\\Security-Advanced-Yellow-Lab\\console\\console.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\11900197\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
