@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using api.Scopes;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,33 +35,29 @@ namespace api
             services.AddCors(options => {
                 options.AddPolicy(name: corsPolicy,
                     builder => {
-                        builder.WithOrigins("http://localhost:8080")
+                        builder.WithOrigins("http://localhost:8088")
                         .AllowAnyHeader()
                         .AllowCredentials();
                     });
             });
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    options.Authority = "http://identity";
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateAudience = false
-                    };
+                    options.Authority = "https://dev-z6sboel7.eu.auth0.com/";
+                    options.Audience = "https://pesecadv/api";
+                 
                 });
 
             services.AddAuthorization(options => {
-                options.AddPolicy("ApiScope", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", "krc-genk");
-                });
+                options.AddPolicy("read:seatholders", policy => policy.Requirements.Add(new HasScopeRequirement("read:seatholders", "https://dev-z6sboel7.eu.auth0.com/")));
             });
 
+            services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
             services.AddControllers();
-            
+                        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +78,7 @@ namespace api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers()
-                    .RequireAuthorization("ApiScope");
+                    .RequireAuthorization("read:seatholders");
             });
 
             

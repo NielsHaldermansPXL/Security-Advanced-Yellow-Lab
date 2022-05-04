@@ -27,7 +27,6 @@ namespace console
 
             var accessToken = getToken().GetAwaiter().GetResult();
 
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var stringTask = client.GetStringAsync($"http://localhost:5000/api/seatholders/{input}");
@@ -41,27 +40,31 @@ namespace console
         static async Task Main(string[] args)
         {
             await GetSeatHolders();
-           
+            //await getToken();
         }
 
         static async Task<string> getToken()
         {
-            string url = "http://localhost:5002/connect/token";
+            string url = "https://dev-z6sboel7.eu.auth0.com/oauth/token";
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
 
             var data = new[]
             {
-                new KeyValuePair<string, string>("client_id", "console"),
-                new KeyValuePair<string, string>("client_secret", "sec-console"),
+                new KeyValuePair<string, string>("client_id", "J9qJ1TitU7pCjp4QyRP2OERTOLYFhHtn"),
+                new KeyValuePair<string, string>("client_secret", "e41SL9_Mjb1pMpl-EdwNzrIW8q6iuDR8Guz8xbMQiABM-I_UZn4vNOiTEPZfoNLU"),
+                new KeyValuePair<string, string>("audience", "https://pesecadv/api"),
                 new KeyValuePair<string, string>("grant_type", "client_credentials")
             };
 
             var response = await client.PostAsync(url, new FormUrlEncodedContent(data));
+
             var responsJSON = JObject.Parse(response.Content.ReadAsStringAsync().Result);
             var accessToken = responsJSON["access_token"].ToString();
 
+            //Console.WriteLine(accessToken);
+            //Console.ReadLine();
 
             return accessToken;
         }

@@ -34,6 +34,8 @@ namespace api.Controllers
             return seatholders;
         }
 
+        [HttpGet("private-scoped")]
+        [Authorize("read:seatholders")]
         [Route(("{city}"))]
         public IActionResult GetAmountOfSeatholders(string city)
         {
